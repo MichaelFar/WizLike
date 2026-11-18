@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://dtq3h7p653vwh"]
+
+[ext_resource type="Texture2D" uid="uid://wy41508u2db5" path="res://sprites/GhostIdle.png" id="1_k5m4p"]
+
+[sub_resource type="Animation" id="Animation_ltral"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/SubViewportContainer/SubViewport/GhostIdle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3h5ta"]
+resource_name = "ghost_idle"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/SubViewportContainer/SubViewport/GhostIdle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.53333336, 0.8, 1.0666667, 1.3333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ltral"]
+_data = {
+&"RESET": SubResource("Animation_ltral"),
+&"ghost_idle": SubResource("Animation_3h5ta")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5m4p"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="BaseCardScene" type="Control" unique_id=1004032580]
+propagate_maximum_size = true
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 29.57
+offset_bottom = 42.65
+offset_transform_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1035762014]
+libraries/ = SubResource("AnimationLibrary_ltral")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1170349956]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k5m4p")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer" unique_id=110376009]
+texture_filter = 1
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/SubViewportContainer" unique_id=1831766037]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(29, 42)
+render_target_update_mode = 4
+
+[node name="GhostIdle" type="Sprite2D" parent="PanelContainer/SubViewportContainer/SubViewport" unique_id=1388319032]
+texture_filter = 1
+position = Vector2(14, 19)
+texture = ExtResource("1_k5m4p")
+hframes = 6
