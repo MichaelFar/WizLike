@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://3r5acksoviqn"]
+
+[ext_resource type="Script" uid="uid://dnxg055mio3dm" path="res://scripts/DraggableRigidBody.cs" id="1_bbuo6"]
+[ext_resource type="PackedScene" uid="uid://dtq3h7p653vwh" path="res://scenes/card_scenes/base_card_control_scene.tscn" id="2_8t0iy"]
+[ext_resource type="Script" uid="uid://dfjy3belxdsvs" path="res://scripts/DraggableArea.cs" id="3_10tur"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_js5mn"]
+viewport_path = NodePath("Sprite2D/SubViewport")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcjj5"]
+size = Vector2(205, 294)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al6tu"]
+size = Vector2(300, 400)
+
+[node name="CardContainer" type="Node2D" unique_id=728599532]
+
+[node name="RigidBodyCard" type="RigidBody2D" parent="." unique_id=1636939271 node_paths=PackedStringArray("areaToFollow", "topPoint")]
+input_pickable = true
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp_mode = 1
+script = ExtResource("1_bbuo6")
+areaToFollow = NodePath("../2DCard")
+topPoint = NodePath("../2DCard/Marker2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBodyCard" unique_id=88627192]
+texture_filter = 1
+scale = Vector2(7, 7)
+texture = SubResource("ViewportTexture_js5mn")
+
+[node name="SubViewport" type="SubViewport" parent="RigidBodyCard/Sprite2D" unique_id=2882296]
+transparent_bg = true
+size = Vector2i(29, 42)
+
+[node name="BaseCardScene" parent="RigidBodyCard/Sprite2D/SubViewport" unique_id=1004032580 instance=ExtResource("2_8t0iy")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBodyCard" unique_id=1370057167]
+position = Vector2(0.5000305, 1.0000153)
+shape = SubResource("RectangleShape2D_vcjj5")
+
+[node name="2DCard" type="Area2D" parent="." unique_id=981078085]
+script = ExtResource("3_10tur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="2DCard" unique_id=942716356]
+position = Vector2(0.5000305, 1.0000153)
+shape = SubResource("RectangleShape2D_al6tu")
+
+[node name="Marker2D" type="Marker2D" parent="2DCard" unique_id=48515347]
+position = Vector2(0, -143)
+
+[connection signal="input_event" from="2DCard" to="2DCard" method="HandleDrag"]
+[connection signal="mouse_entered" from="2DCard" to="2DCard" method="OnMouseEnter"]
+[connection signal="mouse_exited" from="2DCard" to="2DCard" method="OnMouseExit"]

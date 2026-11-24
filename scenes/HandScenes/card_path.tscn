@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c16rfxrli3qb5"]
+
+[ext_resource type="PackedScene" uid="uid://bxbrud86skdqt" path="res://scenes/card_scenes/2DCardScenes/2d_card.tscn" id="1_iy2jb"]
+
+[node name="CardPath" type="PathFollow2D" unique_id=2013201386]
+rotates = false
+
+[node name="2DCard" parent="." unique_id=981078085 node_paths=PackedStringArray("myPath") instance=ExtResource("1_iy2jb")]
+scale = Vector2(0.99999994, 0.79248685)
+myPath = NodePath("..")

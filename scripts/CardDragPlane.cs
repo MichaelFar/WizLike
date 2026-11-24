@@ -12,4 +12,6 @@ public partial class CardDragPlane : StaticBody3D
 	public override void _Process(double delta)
 	{
 	}
+
+	
 }

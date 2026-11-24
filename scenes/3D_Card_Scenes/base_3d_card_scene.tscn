@@ -1,37 +1,44 @@
 [gd_scene format=3 uid="uid://bl3sanqrj2jnd"]
 
 [ext_resource type="PackedScene" uid="uid://dtq3h7p653vwh" path="res://scenes/card_scenes/base_card_control_scene.tscn" id="1_3xv8j"]
+[ext_resource type="Script" uid="uid://c5qp7oky2cnts" path="res://scenes/3D_Card_Scenes/Base3dCard.cs" id="1_xoswk"]
+[ext_resource type="PackedScene" uid="uid://bhvmu7bv3gv21" path="res://scenes/card_scenes/RigidBodyCard.tscn" id="2_5sphc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_al6tu"]
-size = Vector3(1, 1, 0.085)
+size = Vector3(1.9993896, 2.7521973, 0.001)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_mrica"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_d7p3h"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63vrs"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ku8ha"]
 resource_local_to_scene = true
 transparency = 1
-albedo_texture = SubResource("ViewportTexture_mrica")
+albedo_texture = SubResource("ViewportTexture_d7p3h")
 texture_filter = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_al6tu"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_q8rj6"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_63vrs")
+material = SubResource("StandardMaterial3D_ku8ha")
 size = Vector2(2, 2.8)
 
-[node name="Base3DCardScene" type="Area3D" unique_id=698180746]
-transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.70710677, 0.7071068, -0.7071068, -0.5, 0.5, 0, 0, 0)
+[node name="Base3DCardScene" type="Area3D" unique_id=58342689 node_paths=PackedStringArray("cardMesh")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, -2.9802322e-08, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("1_xoswk")
+cardMesh = NodePath("MeshInstance3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1277264845]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.9604645e-08, -1.0002813)
+[node name="RigidBody2D" parent="." unique_id=1636939271 instance=ExtResource("2_5sphc")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1902702579]
 shape = SubResource("BoxShape3D_al6tu")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=543124565]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 4.371139e-08, -1)
-mesh = SubResource("PlaneMesh_al6tu")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1707871634]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_q8rj6")
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=1630296879]
+[node name="SubViewport" type="SubViewport" parent="." unique_id=420421326]
 transparent_bg = true
 size = Vector2i(29, 42)
 
 [node name="BaseCardScene" parent="SubViewport" unique_id=1004032580 instance=ExtResource("1_3xv8j")]
+
+[connection signal="input_event" from="." to="." method="DragCard"]

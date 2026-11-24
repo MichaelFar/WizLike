@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bxbrud86skdqt"]
+
+[ext_resource type="Script" uid="uid://dfjy3belxdsvs" path="res://scripts/DraggableArea.cs" id="1_ndnac"]
+[ext_resource type="PackedScene" uid="uid://dtq3h7p653vwh" path="res://scenes/card_scenes/base_card_control_scene.tscn" id="2_ij025"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2kxp8"]
+viewport_path = NodePath("Sprite2D/SubViewport")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al6tu"]
+size = Vector2(300, 400)
+
+[node name="2DCard" type="Area2D" unique_id=981078085]
+script = ExtResource("1_ndnac")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1653063481]
+texture_filter = 1
+scale = Vector2(7, 7)
+texture = SubResource("ViewportTexture_2kxp8")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite2D" unique_id=371667726]
+transparent_bg = true
+size = Vector2i(29, 42)
+
+[node name="BaseCardScene" parent="Sprite2D/SubViewport" unique_id=1004032580 instance=ExtResource("2_ij025")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=942716356]
+position = Vector2(0.5000305, 1.0000153)
+shape = SubResource("RectangleShape2D_al6tu")
+
+[connection signal="input_event" from="." to="." method="HandleDrag"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEnter"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExit"]
