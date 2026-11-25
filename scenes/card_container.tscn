@@ -1,63 +1,38 @@
 [gd_scene format=3 uid="uid://3r5acksoviqn"]
 
 [ext_resource type="Script" uid="uid://cdpel7rx1ifij" path="res://scripts/CardContainer.cs" id="1_8t0iy"]
-[ext_resource type="Script" uid="uid://dnxg055mio3dm" path="res://scripts/DraggableRigidBody.cs" id="1_bbuo6"]
-[ext_resource type="PackedScene" uid="uid://dtq3h7p653vwh" path="res://scenes/card_scenes/base_card_control_scene.tscn" id="2_8t0iy"]
+[ext_resource type="PackedScene" uid="uid://deylm8hbajsuf" path="res://scenes/card_scenes/2DCardScenes/rigid_body_card.tscn" id="2_bbuo6"]
 [ext_resource type="Script" uid="uid://dfjy3belxdsvs" path="res://scripts/DraggableArea.cs" id="3_10tur"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d7p3h"]
-friction = 0.0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_8t0iy"]
-viewport_path = NodePath("RigidBodyCard/Sprite2D/SubViewport")
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8t0iy"]
-radius = 101.49997
-height = 295.99997
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbuo6"]
+size = Vector2(201, 289)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_al6tu"]
-size = Vector2(300, 400)
+size = Vector2(2000, 2000)
 
-[node name="CardContainer" type="PathFollow2D" unique_id=218215492 node_paths=PackedStringArray("dragArea")]
+[node name="CardContainer" type="PathFollow2D" unique_id=218215492 node_paths=PackedStringArray("dragArea", "topPoint")]
 rotates = false
 script = ExtResource("1_8t0iy")
-dragArea = NodePath("2DCard")
+dragArea = NodePath("DragArea")
+rbCardScene = ExtResource("2_bbuo6")
+topPoint = NodePath("DragArea/TopPoint")
 
-[node name="RigidBodyCard" type="RigidBody2D" parent="." unique_id=1636939271 node_paths=PackedStringArray("areaToFollow", "topPoint")]
-input_pickable = true
-physics_material_override = SubResource("PhysicsMaterial_d7p3h")
-gravity_scale = 0.0
-linear_damp = 10.0
-angular_damp_mode = 1
-script = ExtResource("1_bbuo6")
-areaToFollow = NodePath("../2DCard")
-topPoint = NodePath("../2DCard/Marker2D")
-
-[node name="Sprite2D" type="Sprite2D" parent="RigidBodyCard" unique_id=88627192]
-texture_filter = 1
-scale = Vector2(7, 7)
-texture = SubResource("ViewportTexture_8t0iy")
-
-[node name="SubViewport" type="SubViewport" parent="RigidBodyCard/Sprite2D" unique_id=2882296]
-transparent_bg = true
-size = Vector2i(29, 42)
-
-[node name="BaseCardScene" parent="RigidBodyCard/Sprite2D/SubViewport" unique_id=1004032580 instance=ExtResource("2_8t0iy")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBodyCard" unique_id=1370057167]
-position = Vector2(0.5000305, 1.0000153)
-shape = SubResource("CapsuleShape2D_8t0iy")
-
-[node name="2DCard" type="Area2D" parent="." unique_id=981078085]
+[node name="DragArea" type="Area2D" parent="." unique_id=981078085 node_paths=PackedStringArray("activeDragShape", "selectShape")]
 script = ExtResource("3_10tur")
+activeDragShape = NodePath("ActiveDragShape")
+selectShape = NodePath("SelectShape")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="2DCard" unique_id=942716356]
+[node name="SelectShape" type="CollisionShape2D" parent="DragArea" unique_id=942716356]
+position = Vector2(0.50001526, 0.50001526)
+shape = SubResource("RectangleShape2D_bbuo6")
+
+[node name="ActiveDragShape" type="CollisionShape2D" parent="DragArea" unique_id=987675891]
 position = Vector2(0.5000305, 1.0000153)
 shape = SubResource("RectangleShape2D_al6tu")
 
-[node name="Marker2D" type="Marker2D" parent="2DCard" unique_id=48515347]
+[node name="TopPoint" type="Marker2D" parent="DragArea" unique_id=48515347]
 position = Vector2(0, -143)
 
-[connection signal="input_event" from="2DCard" to="2DCard" method="HandleDrag"]
-[connection signal="mouse_entered" from="2DCard" to="2DCard" method="OnMouseEnter"]
-[connection signal="mouse_exited" from="2DCard" to="2DCard" method="OnMouseExit"]
+[connection signal="input_event" from="DragArea" to="DragArea" method="HandleDrag"]
+[connection signal="mouse_entered" from="DragArea" to="DragArea" method="OnMouseEnter"]
+[connection signal="mouse_exited" from="DragArea" to="DragArea" method="OnMouseExit"]

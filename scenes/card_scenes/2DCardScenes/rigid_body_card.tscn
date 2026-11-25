@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://deylm8hbajsuf"]
+
+[ext_resource type="Script" uid="uid://dnxg055mio3dm" path="res://scripts/DraggableRigidBody.cs" id="1_7ti75"]
+[ext_resource type="PackedScene" uid="uid://dtq3h7p653vwh" path="res://scenes/card_scenes/base_card_control_scene.tscn" id="2_imt5o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d7p3h"]
+friction = 0.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_8t0iy"]
+viewport_path = NodePath("Sprite2D/SubViewport")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8t0iy"]
+radius = 101.49997
+height = 295.99997
+
+[node name="RigidBodyCard" type="RigidBody2D" unique_id=311006458]
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_d7p3h")
+gravity_scale = 0.0
+linear_damp = 15.0
+angular_damp_mode = 1
+script = ExtResource("1_7ti75")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1489553622]
+texture_filter = 1
+scale = Vector2(7, 7)
+texture = SubResource("ViewportTexture_8t0iy")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite2D" unique_id=2021823075]
+transparent_bg = true
+size = Vector2i(29, 42)
+
+[node name="BaseCardScene" parent="Sprite2D/SubViewport" unique_id=1004032580 instance=ExtResource("2_imt5o")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1997665392]
+position = Vector2(0.5000305, 1.0000153)
+shape = SubResource("CapsuleShape2D_8t0iy")

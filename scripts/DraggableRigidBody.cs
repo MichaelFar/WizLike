@@ -9,8 +9,8 @@ public partial class DraggableRigidBody : RigidBody2D
 	
 	[Signal]
 	public delegate void ReleasedCardEventHandler();
-	[Export]private DraggableArea areaToFollow;
-	[Export]private Marker2D topPoint;
+	[Export]public DraggableArea areaToFollow;
+	[Export]public Marker2D topPoint;
 	public override void _Ready()
 	{
 		

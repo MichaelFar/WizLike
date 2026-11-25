@@ -30,23 +30,24 @@ public partial class HandManager : Node2D
 	
 	public void DrawCard()
 	{
-		if(maxCards > numCardsInHand)
+		if(maxCards > cardInstances.Count)
 		{
 			CardContainer card_instance = deck[0].Instantiate<CardContainer>();//Replace with random draw
 			handCurve.AddChild(card_instance);
 
-			card_instance.GlobalPosition = new Vector2(0, 1080);
+			
 			card_instance.dragArea.Position = Vector2.Zero;
 			cardInstances.Add(card_instance);
 			card_instance.dragArea.RightClicked += DiscardCard; 
-			numCardsInHand += 1;
+			//numCardsInHand += 1;
+			card_instance.InstantiateCardScene(new Vector2(0, 1080));
 			
 		}
 		ReadjustCardPositions();
 	}
 	public void ReadjustCardPositions()
 	{
-		float ratio_per_card = 1.0f / (numCardsInHand + 1.0f);
+		float ratio_per_card = 1.0f / (cardInstances.Count + 1.0f);
 		float current_ratio = 0.0f;
 		foreach(CardContainer i in cardInstances)
 		{
@@ -59,8 +60,9 @@ public partial class HandManager : Node2D
 	public void DiscardCard(CardContainer card_to_discard)
 	{
 		cardInstances.Remove(card_to_discard);
+		card_to_discard.myRBCard.QueueFree();
 		card_to_discard.QueueFree();
-		numCardsInHand -= 1;
+		//numCardsInHand -= 1;
 		ReadjustCardPositions();
 	}
 }
