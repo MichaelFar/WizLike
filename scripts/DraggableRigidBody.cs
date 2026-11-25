@@ -30,7 +30,7 @@ public partial class DraggableRigidBody : RigidBody2D
 		{
 			float torque_direction = RotationDegrees < 0.0f ? 1.0f : -1.0f;
 			//GD.Print(torque_direction);
-			GD.Print(GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation);
+			//GD.Print(GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation);
 			
 			AngularVelocity = Mathf.Pi * (GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation);
 			if(Mathf.Abs(GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation) <= 0.001)

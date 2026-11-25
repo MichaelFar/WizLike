@@ -31,12 +31,9 @@ data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0
 
 [sub_resource type="Curve2D" id="Curve2D_2kxp8"]
 _data = {
-"points": PackedVector2Array(-107.6817, 179.02686, 107.6817, -179.02686, 100, 652.217, -37.515778, -133.32893, 37.515778, 133.32893, 1052, 650)
+"points": PackedVector2Array(-54.51671, 196.0805, 54.51671, -196.0805, -180, 560, -22.325779, -179.47412, 22.325779, 179.47412, 1380, 560)
 }
 point_count = 2
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_d7p3h"]
-viewport_path = NodePath("RigidBodyCard/Sprite2D/SubViewport")
 
 [node name="Node3D" type="Node3D" unique_id=709772302]
 
@@ -66,8 +63,9 @@ script = ExtResource("4_2kxp8")
 shape = SubResource("ConcavePolygonShape3D_mrica")
 
 [node name="HandManager" type="Node2D" parent="." unique_id=735051189 node_paths=PackedStringArray("handCurve")]
-position = Vector2(0, -157)
+position = Vector2(364, 389)
 script = ExtResource("4_d7p3h")
+deck = Array[PackedScene]([ExtResource("5_ku8ha"), ExtResource("5_ku8ha"), ExtResource("5_ku8ha")])
 handCurve = NodePath("Path2D")
 
 [node name="Path2D" type="Path2D" parent="HandManager" unique_id=725004455]
@@ -75,32 +73,5 @@ position = Vector2(2, -175)
 scale = Vector2(1, 1.2618506)
 curve = SubResource("Curve2D_2kxp8")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="HandManager/Path2D" unique_id=1865994707]
-position = Vector2(100, 652.217)
-rotation = -1.0292867
-
 [node name="GlobalGameData" type="Node" parent="." unique_id=1333301351]
 script = ExtResource("5_d7p3h")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=509758400]
-position = Vector2(88, 274)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1901354012]
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D" unique_id=563005419]
-position = Vector2(-1, 0)
-polygon = PackedVector2Array(-52, 69, -27, 150, 74, 164, 149, 151, 169, 89, 101, 70, -36, 61)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=2129072163]
-polygon = PackedVector2Array(-52, 69, -27, 150, 74, 164, 149, 151, 169, 89, 101, 70, -36, 61)
-
-[node name="CardContainer" parent="." unique_id=728599532 instance=ExtResource("5_ku8ha")]
-position = Vector2(371, 152)
-
-[node name="Sprite2D" parent="CardContainer/RigidBodyCard" parent_id_path=PackedInt32Array(728599532, 1636939271) index="0" unique_id=88627192]
-texture = SubResource("ViewportTexture_d7p3h")
-
-[node name="2DCard" parent="CardContainer" index="1" unique_id=981078085 node_paths=PackedStringArray("myPath")]
-myPath = NodePath("../../HandManager/Path2D/PathFollow2D")
-
-[editable path="CardContainer"]

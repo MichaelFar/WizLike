@@ -6,12 +6,14 @@ public partial class DraggableArea : Area2D
 	// Called when the node enters the scene tree for the first time.
 	private bool mouseInArea = false;
 	public bool beingDragged = false;
-	[Export]private PathFollow2D myPath;
+	private PathFollow2D myPath;
 	[Signal]
 	public delegate void ReleasedCardEventHandler();
+	[Signal]
+	public delegate void RightClickedEventHandler(CardContainer my_container);
 	public override void _Ready()
 	{
-		
+		myPath = Owner as CardContainer;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -44,6 +46,10 @@ public partial class DraggableArea : Area2D
 			beingDragged = false;
 			Reparent(myPath);
 			Position = Vector2.Zero;
+		}
+		if(Input.IsActionJustReleased("RightClick") && mouseInArea && !beingDragged)
+		{
+			EmitSignal(SignalName.RightClicked, myPath);
 		}
 	}
 	public void OnMouseEnter()
