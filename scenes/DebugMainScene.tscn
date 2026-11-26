@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://f3jhjumgd38o"]
 
 [ext_resource type="Script" uid="uid://dsteuahwfun2a" path="res://scripts/CardInteractor.cs" id="3_mrica"]
-[ext_resource type="Script" uid="uid://cy1ru8t4f77da" path="res://scripts/CardDragPlane.cs" id="4_2kxp8"]
 [ext_resource type="Script" uid="uid://bjqdu3xvinjej" path="res://scripts/HandManager.cs" id="4_d7p3h"]
 [ext_resource type="Script" uid="uid://ci0h707ifb67k" path="res://scripts/GlobalGameData.cs" id="5_d7p3h"]
 [ext_resource type="PackedScene" uid="uid://3r5acksoviqn" path="res://scenes/card_container.tscn" id="5_ku8ha"]
+[ext_resource type="Script" uid="uid://cvms4lo0g2igs" path="res://scripts/PlayArea.cs" id="5_q8rj6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_07rq4"]
 sky_top_color = Color(0.72330135, 0.18382582, 0.60061365, 1)
@@ -22,12 +22,6 @@ glow_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_wd65j"]
 size = Vector2(20, 20)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_al6tu"]
-size = Vector2(10, 10)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mrica"]
-data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
 
 [sub_resource type="Curve2D" id="Curve2D_2kxp8"]
 _data = {
@@ -51,17 +45,6 @@ mesh = SubResource("PlaneMesh_wd65j")
 transform = Transform3D(0.70710677, -0.5, 0.49999994, 0, 0.7071067, 0.7071068, -0.70710677, -0.5, 0.49999994, 11, 9, 11)
 script = ExtResource("3_mrica")
 
-[node name="CardDragPlane" type="MeshInstance3D" parent="." unique_id=1448095287]
-transform = Transform3D(0.70710677, 0.49999994, 0.50000006, 0, 0.70710677, -0.7071067, -0.70710677, 0.49999994, 0.5000001, 9, 6.4142137, 9)
-visible = false
-mesh = SubResource("PlaneMesh_al6tu")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="CardDragPlane" unique_id=87442074]
-script = ExtResource("4_2kxp8")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CardDragPlane/StaticBody3D" unique_id=4636267]
-shape = SubResource("ConcavePolygonShape3D_mrica")
-
 [node name="HandManager" type="Node2D" parent="." unique_id=735051189 node_paths=PackedStringArray("handCurve")]
 position = Vector2(364, 389)
 script = ExtResource("4_d7p3h")
@@ -75,3 +58,33 @@ curve = SubResource("Curve2D_2kxp8")
 
 [node name="GlobalGameData" type="Node" parent="." unique_id=1333301351]
 script = ExtResource("5_d7p3h")
+
+[node name="PlayArea" type="Area2D" parent="." unique_id=53702837 node_paths=PackedStringArray("topMarker", "cancelButton")]
+position = Vector2(166, 292)
+script = ExtResource("5_q8rj6")
+topMarker = NodePath("TopMarker")
+cancelButton = NodePath("Button")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayArea" unique_id=956573611]
+polygon = PackedVector2Array(-128, -192, -128, 192, 128, 192, 128, -192)
+
+[node name="Polygon2D" type="Polygon2D" parent="PlayArea" unique_id=554393096]
+color = Color(0.2627451, 0.5882353, 0.21176471, 0.49019608)
+polygon = PackedVector2Array(-128, -192, -128, 192, 128, 192, 128, -192)
+
+[node name="TopMarker" type="Marker2D" parent="PlayArea" unique_id=409623955]
+position = Vector2(0, -238)
+
+[node name="Button" type="Button" parent="PlayArea" unique_id=782739346]
+offset_left = -104.0
+offset_top = 222.0
+offset_right = 109.0
+offset_bottom = 318.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 64
+text = "Cancel"
+
+[connection signal="PotentialCardInArea" from="PlayArea" to="HandManager" method="DisplaceCardFromHand"]
+[connection signal="body_entered" from="PlayArea" to="PlayArea" method="CheckCardForPlayable"]
+[connection signal="button_up" from="PlayArea/Button" to="HandManager" method="AddDisplacedCardsBackToHand"]
+[connection signal="button_up" from="PlayArea/Button" to="PlayArea" method="ResetArea"]

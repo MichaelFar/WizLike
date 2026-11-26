@@ -9,7 +9,7 @@ public partial class DraggableRigidBody : RigidBody2D
 	
 	[Signal]
 	public delegate void ReleasedCardEventHandler();
-	[Export]public DraggableArea areaToFollow;
+	[Export]public Area2D areaToFollow;
 	[Export]public Marker2D topPoint;
 	public override void _Ready()
 	{
@@ -28,10 +28,6 @@ public partial class DraggableRigidBody : RigidBody2D
 		ConstantForce = drag_force;
 		if(RotationDegrees != 0.0f)
 		{
-			float torque_direction = RotationDegrees < 0.0f ? 1.0f : -1.0f;
-			//GD.Print(torque_direction);
-			//GD.Print(GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation);
-			
 			AngularVelocity = Mathf.Pi * (GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation);
 			if(Mathf.Abs(GetAngleTo(topPoint.GlobalPosition) - Mathf.DegToRad(RotationDegrees - 90.0f) - Rotation) <= 0.001)
 			{
@@ -41,6 +37,7 @@ public partial class DraggableRigidBody : RigidBody2D
 		
 			
     }
+	
 
     
 

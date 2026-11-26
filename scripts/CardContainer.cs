@@ -8,7 +8,7 @@ public partial class CardContainer : PathFollow2D
 	
 	[Export] public DraggableArea dragArea;
 	[Export] private PackedScene rbCardScene;
-	[Export] private Marker2D topPoint;
+	[Export] public Marker2D topPoint;
 	public DraggableRigidBody myRBCard;
 	public override void _Ready()
 	{
