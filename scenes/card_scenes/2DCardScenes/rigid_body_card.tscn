@@ -10,16 +10,17 @@ friction = 0.0
 viewport_path = NodePath("Sprite2D/SubViewport")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8t0iy"]
-radius = 101.49997
-height = 295.99997
+radius = 94.49997
+height = 303.99997
 
-[node name="RigidBodyCard" type="RigidBody2D" unique_id=311006458]
+[node name="RigidBodyCard" type="RigidBody2D" unique_id=311006458 node_paths=PackedStringArray("myCardScene")]
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_d7p3h")
 gravity_scale = 0.0
 linear_damp = 15.0
 angular_damp_mode = 1
 script = ExtResource("1_7ti75")
+myCardScene = NodePath("Sprite2D/SubViewport/BaseCardScene")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1489553622]
 texture_filter = 1
@@ -28,7 +29,7 @@ texture = SubResource("ViewportTexture_8t0iy")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite2D" unique_id=2021823075]
 transparent_bg = true
-size = Vector2i(29, 42)
+size = Vector2i(40, 60)
 
 [node name="BaseCardScene" parent="Sprite2D/SubViewport" unique_id=1004032580 instance=ExtResource("2_imt5o")]
 

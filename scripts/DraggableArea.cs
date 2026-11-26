@@ -42,12 +42,13 @@ public partial class DraggableArea : Area2D
 			}
 			else if(Input.IsActionJustReleased("LeftClick"))
 			{
-				EmitSignal(SignalName.ReleasedCard);
+				
 				GlobalGameData.Instance.isDragging = false;
 				beingDragged = false;
 				SelectDragState(false);
 				Reparent(myPath);
 				Position = Vector2.Zero;
+				EmitSignal(SignalName.ReleasedCard);
 			}
 			if(Input.IsActionJustReleased("RightClick") && !beingDragged)
 			{

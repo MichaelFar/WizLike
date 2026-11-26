@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dtq3h7p653vwh"]
 
+[ext_resource type="Script" uid="uid://1c5vpqct3b0t" path="res://scripts/BaseCardControlScene.cs" id="1_dupr1"]
 [ext_resource type="Texture2D" uid="uid://wy41508u2db5" path="res://sprites/GhostIdle.png" id="1_k5m4p"]
 
 [sub_resource type="Animation" id="Animation_ltral"]
@@ -57,15 +58,17 @@ propagate_maximum_size = true
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 29.57
-offset_bottom = 42.65
+offset_right = 40.0
+offset_bottom = 60.0
 offset_transform_enabled = true
+script = ExtResource("1_dupr1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1035762014]
 libraries/ = SubResource("AnimationLibrary_ltral")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1170349956]
 texture_filter = 1
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,11 +85,26 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="PanelContainer/SubViewportContainer" unique_id=1831766037]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(29, 42)
+size = Vector2i(40, 60)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="GhostIdle" type="Sprite2D" parent="PanelContainer/SubViewportContainer/SubViewport" unique_id=1388319032]
 texture_filter = 1
-position = Vector2(14, 19)
+position = Vector2(20, 22)
 texture = ExtResource("1_k5m4p")
 hframes = 6
+
+[node name="BoxContainer" type="BoxContainer" parent="." unique_id=1279230953]
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 23.0
+vertical = true
+
+[node name="Cost Label" type="Label" parent="." unique_id=1656534116]
+layout_mode = 1
+offset_top = -2.0
+offset_right = 10.0
+offset_bottom = 21.0
+size_flags_vertical = 0
+text = "1"

@@ -10,4 +10,5 @@ public partial class GlobalGameData : Node
     {
         Instance = this;
     }
+    
 }
